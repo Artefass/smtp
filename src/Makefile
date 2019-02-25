@@ -1,9 +1,9 @@
-CFLAGS  = -std=gnu99 -Wall -Werror
+CFLAGS  = -std=gnu99 -Wall -Werror -pthread
 
 CC = gcc
 
 TARGET = smtp
-SRCS = main.c commands.c smtp.c
+SRCS = main.c commands.c smtp.c dynamic_vector.c logger.c smtp_sockets.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all clean
@@ -16,4 +16,4 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS)  -c $< -o $@
 
 clean:
-	rm -rf $(TARGET) $(OBJS)
+	rm -rf $(TARGET) $(OBJS) *.txt
