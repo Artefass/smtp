@@ -1,0 +1,26 @@
+# RSET после EHLO должен возвращать сессию к исходному состоянию (сразу после EHLO)
+S:220 phobos Service ready
+C:EHLO correct.pvs.bmstu 
+S:250 phobos greets correct.pvs.bmstu
+S:250 VRFY
+C:MAIL FROM:<oleg@correct.pvs.bmstu>
+S:250 OK
+C:RSET
+S:250 OK
+C:RCPT TO:<oleg@mysmtp.pvs.bmstu>
+S:503 Bad sequence of commands
+C:MAIL FROM:<oleg@correct.pvs.bmstu>
+S:250 OK
+C:RCPT TO:<oleg@mysmtp.pvs.bmstu>
+S:250 OK
+C:DATA
+S:354
+C:THIS IS TEST
+C:NEWLINE
+C:..doubledot
+C:TEST.
+C:.
+S:250
+C:QUIT
+S:221
+ 

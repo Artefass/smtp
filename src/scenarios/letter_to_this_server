@@ -1,0 +1,17 @@
+S:220
+C:HELO correct.pvs.bmstu
+S:250
+C:MAIL FROM:<oleg@correct.pvs.bmstu>
+S:250
+C:RCPT TO:<oleg@mysmtp.pvs.bmstu>
+S:250
+C:DATA
+S:354
+C:THIS IS TEST
+C:NEWLINE
+C:..doubledot
+C:TEST.
+C:.
+S:250
+C:QUIT
+S:221

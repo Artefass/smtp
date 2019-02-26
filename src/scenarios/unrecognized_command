@@ -1,0 +1,14 @@
+# На неизвестную команду необходимо ответить ошибкой,
+# но продолжать реагировать нормально на дальнейшие команды
+S:220 phobos Service ready
+C:HELO correct.pvs.bmstu
+S:250 phobos greets correct.pvs.bmstu
+C:QWERTY
+S:500 Syntax error, command unrecognized
+C:HELO correct.pvs.bmstu
+S:250 phobos greets correct.pvs.bmstu
+C:RSET 
+S:250 OK
+C:QUIT
+S:221 phobos Service closing transmission channel
+ 

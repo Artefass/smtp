@@ -1,0 +1,18 @@
+[SMTPMASTER] 2019-02-26 23:37:31 smtp.c:369 Starting SMTP server with 1 threads on port 7548, maildir ./unknown_exits-mail/, logfile ./unknown_exits-log and dns 127.0.0.1
+[SMTPMASTER] 2019-02-26 23:37:31 smtp.c:412 Spawned worker threads
+[SMTPMASTER] 2019-02-26 23:37:31 smtp.c:428 Starting server loop
+[WORKER1] 2019-02-26 23:37:31 smtp_worker.c:307 Connection 0 new state 0
+[WORKER1] 2019-02-26 23:37:31 smtp_worker_actions.c:92 Processing HELO
+[WORKER1] 2019-02-26 23:37:31 smtp_worker.c:307 Connection 0 new state 1
+[WORKER1] 2019-02-26 23:37:31 smtp_worker.c:307 Connection 0 new state 1
+[WORKER1] 2019-02-26 23:37:31 smtp_worker.c:165 Error reading data
+[WORKER1] 2019-02-26 23:37:31 smtp_worker.c:281 Client disconnected by himself
+[WORKER1] 2019-02-26 23:37:31 smtp_worker.c:316 Closing a connection
+[SMTPMASTER] 2019-02-26 23:37:31 smtp.c:287 Caught signal 2
+[SMTPMASTER] 2019-02-26 23:37:31 smtp.c:328 Server select interrupted
+[SMTPMASTER] 2019-02-26 23:37:31 smtp.c:430 Finished server loop
+[SMTPMASTER] 2019-02-26 23:37:31 smtp.c:263 Stopping all workers
+[WORKER1] 2019-02-26 23:37:31 smtp_worker.c:72 Master sent stop command
+[WORKER1] 2019-02-26 23:37:31 smtp_worker.c:339 Closing everything
+[WORKER1] 2019-02-26 23:37:31 smtp_worker.c:354 Shutting down
+[SMTPMASTER] 2019-02-26 23:37:31 smtp.c:223 Stopping log thread
