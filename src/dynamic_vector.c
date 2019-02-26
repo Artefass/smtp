@@ -1,72 +1,37 @@
-#include "dynamic_vector.h"
-
+#include "dynamic_vector.h" 
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 #include <assert.h>
 
-dynamic_vector_t create_dynamic_vector(int data_size, int start_capasity) 
+dynamic_vector_t dynamic_vector_create(int data_size, int initial_capacity)
 {
-    assert(start_capasity > 0);
-
-    dynamic_vector_t vector;
+    dynamic_vector_t vector = {};
     vector.data_size = data_size;
-    vector.capasity = (start_capasity >= 16) ? start_capasity: 16;
+    vector.capacity = initial_capacity;
     vector.size = 0;
-    vector.data = malloc(vector.capasity * data_size);
-    if (vector.data == NULL) 
-    {
-        vector.capasity = 0;
-    }
+    vector.data = malloc(data_size * initial_capacity);
+
     return vector;
 }
 
-bool increase_dynamic_vector(dynamic_vector_t *vector, int new_capasity)
+void dynamic_vector_copy_elem_back(dynamic_vector_t *vector, const void *data)
 {
-
-    assert(new_capasity > 0);
-
-    if (vector->capasity > new_capasity) 
-        return true;
-
-    void *data = realloc(vector->data, new_capasity * vector->data_size);
-    if (!data)
-    {
-        return false;
-    }
-
-    vector->data = data;
-    vector->capasity = new_capasity;
-
-    return true; 
+    dynamic_vector_copy_back(vector, data, 1);
 }
 
-bool copy_element_back_dynamic_vector(dynamic_vector_t *vector, const void *element)
+void dynamic_vector_copy_back(dynamic_vector_t *vector, const void *data, int size)
 {
-    return copy_back_dynamic_vector(vector, element, 1);
-}
-
-
-bool copy_back_dynamic_vector(dynamic_vector_t *vector, const void *data, int size)
-{
-
-    int ve_capasity = vector->capasity;
-    while (ve_capasity - size < size) {
-        ve_capasity *= 2;
-    }
-
-    if (!increase_dynamic_vector(vector, ve_capasity))
+    int vec_capacity = vector->capacity;
+    while (vec_capacity-size < size)
     {
-        return false;
+        vec_capacity *= 2;
     }
-
+    dynamic_vector_reserve_at_least(vector, vec_capacity);
     memcpy(vector->data + vector->data_size * vector->size, data, vector->data_size * size);
     vector->size += size;
-
-    return true;
 }
 
-void simple_delete_element_from_dynamic_vector(dynamic_vector_t *vector, int position)
+void dynamic_vector_delete_at(dynamic_vector_t *vector, int position)
 {
     assert(position >= 0 && position < vector->size);
 
@@ -80,8 +45,7 @@ void simple_delete_element_from_dynamic_vector(dynamic_vector_t *vector, int pos
     }
 }
 
-
-void hard_delete_element_from_dynamic_vector(dynamic_vector_t *vector, int position)
+void dynamic_vector_stable_delete_at(dynamic_vector_t *vector, int position)
 {
     assert(position >= 0 && position < vector->size);
     
@@ -95,22 +59,25 @@ void hard_delete_element_from_dynamic_vector(dynamic_vector_t *vector, int posit
     }
 }
 
-
-void clean_dynamic_vector(dynamic_vector_t *vector)
+void dynamic_vector_reserve_at_least(dynamic_vector_t *vector, int min_capacity)
 {
-    vector->size = 0;
+    if (vector->capacity >= min_capacity) return;
+
+    vector->capacity = min_capacity;
+    vector->data = realloc(vector->data, vector->capacity * vector->data_size);
 }
 
-
-void close_dynamic_vector(dynamic_vector_t *vector) 
+void dynamic_vector_clear(dynamic_vector_t *vector)
 {
-    if (vector->data) 
-    {
-        free(vector->data);
-    }
-    vector->data = NULL;
     vector->size = 0;
+} 
+
+void dynamic_vector_close(dynamic_vector_t *vector)
+{
+    free(vector->data);
+    vector->data = NULL;
+    vector->capacity = 0;
     vector->data_size = 0;
-    vector->capasity = 0;
+    vector->size = 0;
 }
 

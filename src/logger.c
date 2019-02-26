@@ -1,7 +1,4 @@
-#define _GNU_SOURCE
-
 #include "logger.h"
-
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,8 +6,8 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <pthread.h>
-#include <stdarg.h>
 #include <fcntl.h>
+#include <stdarg.h>
 
 #include "dynamic_vector.h"
 
@@ -67,7 +64,7 @@ void send_stop_log()
 
 void log_loop(int socket, char *filename)
 {
-    dynamic_vector_t buffer = create_dynamic_vector(sizeof(char), 256);
+    dynamic_vector_t buffer = dynamic_vector_create(sizeof(char), 256);
     int logfile = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
     while(1)
     {      
@@ -78,9 +75,9 @@ void log_loop(int socket, char *filename)
             break;
         }
 
-        if (buffer.capasity < len)
+        if (buffer.capacity < len)
         {
-            increase_dynamic_vector(&buffer, len);
+            dynamic_vector_reserve_at_least(&buffer, len);
         }
 
         read_bytes = read(socket, buffer.data, len);
@@ -95,6 +92,6 @@ void log_loop(int socket, char *filename)
     }
     
     close(logfile);
-    close_dynamic_vector(&buffer);
+    dynamic_vector_close(&buffer);
     exit(0);
 }
