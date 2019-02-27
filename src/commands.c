@@ -40,24 +40,24 @@ static bool init_done = false;
 static command_regex_t client_commands[] =
 {
     // "HELO" SP domain
-    DEFINE_COMMAND(CLIENT_HELO, "HELO", "^HELO\\s(?<domain>" DOMAIN ")$"),
+    DEFINE_COMMAND(CLIENT_HELO, "HELO", "^(HELO|helo)\\s(?<domain>" DOMAIN ")$"),
     // "EHLO" SP (Domain / address-literal)
-    DEFINE_COMMAND(CLIENT_EHLO, "EHLO", "^EHLO\\s" DOMAIN_OR_LITERAL "$"),
+    DEFINE_COMMAND(CLIENT_EHLO, "EHLO", "^(EHLO|ehlo)\\s" DOMAIN_OR_LITERAL "$"),
     // "VRFY" SP String
-    DEFINE_COMMAND(CLIENT_VRFY, "VRFY", "^VRFY\\s.*$"),
+    DEFINE_COMMAND(CLIENT_VRFY, "VRFY", "^(VRFY|vrfy)\\s.*$"),
     // "RSET"
-    DEFINE_COMMAND(CLIENT_RSET, "RSET", "^RSET$"),
+    DEFINE_COMMAND(CLIENT_RSET, "RSET", "^(RSET|rset)$"),
     // "QUIT"
-    DEFINE_COMMAND(CLIENT_QUIT, "QUIT", "^QUIT$"),
+    DEFINE_COMMAND(CLIENT_QUIT, "QUIT", "^(QUIT|quit)$"),
     // TODO: не распознаём Mail-Parameters
     // "MAIL FROM:" Reverse-path [SP Mail-Parameters]
-    DEFINE_COMMAND(CLIENT_MAILFROM, "MAIL FROM", "^MAIL FROM:(?<sender>" REVERSEPATH ")$"),
+    DEFINE_COMMAND(CLIENT_MAILFROM, "MAIL FROM", "^(MAIL|mail) (FROM|from):(?<sender>" REVERSEPATH ")$"),
     // TODO: не рапспознаём Rcpt-parameters
     // "RCPT TO:" ("<Postmaster@" Domain ">" / "<Postmaster>"
     // / Forward-path ) [ SP Rcpt-parameters]
-    DEFINE_COMMAND(CLIENT_RCPTTO, "RCPT TO", "^RCPT TO:(?<recepient>" RECEPIENTS ")$"),
+    DEFINE_COMMAND(CLIENT_RCPTTO, "RCPT TO", "^(RCPT|rcpt) (TO|to):(?<recepient>" RECEPIENTS ")$"),
     // Начала приёма тела письма
-    DEFINE_COMMAND(CLIENT_DATA, "DATA", "^DATA$"),
+    DEFINE_COMMAND(CLIENT_DATA, "DATA", "^(DATA|data)$"),
     // Конец приёма тела письма - просто строка с точкой.
     DEFINE_COMMAND(CLIENT_ENDDATA, "ENDDATA", "^\\.$")
 };

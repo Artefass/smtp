@@ -50,6 +50,7 @@ clean:
 	rm -rf obj
 	rm -rf doc
 	rm -rf maildir
+	rm *.txt
 obj_dirs:
 	mkdir -p ./obj
 	mkdir -p ./obj/test
